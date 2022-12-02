@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load omfilters %}
+{% block conteudo %}
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for produto in produtos %}
+      <div class="col">
+        <div class="card h-100">
+          {% if produto.imagem %}
+            <a href="{{ produto.slug }}"><img style="height: 24vh; " class="card-img-top" src="{{ produto.imagem.url }}" alt="Card image cap" /></a>
+          {% endif %}
+
+          <div style="flex: 1 1 auto;padding-top:5%">
+            <h5 style="font-size:0.813rem;font-family: 'Poppins', sans-serif;" class="text-center card-title">{{ produto.nome }}</h5>
+          </div>
+          <div>
+            {% if produto.preco_marketing_promocional %}
+              <div style="display:flex ; flex-wrap:wrap ;">
+                <span style="font-size:0.930rem ;width:100%;" class="text-center font-weight-bold product-price">{{ produto.preco_marketing_promocional|formata_preco }}</span>
+                <span style="font-size:0.813rem ;width:100%" class="text-center product-old-price text-muted">{{ produto.preco_marketing|formata_preco }}</span>
+              </div>
+            {% else %}
+              <span style="font-size:0.930rem ;width:100%;" class="font-weight-bold product-price product-price"><p class="text-center">{{ produto.preco_marketing|formata_preco }}</p></span>
+            {% endif %}
+          </div>
+          <div class="card-footer">
+            <a href="post.html" class="btn btn-danger btn-sm m-1 btn-block">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              Comprar
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      {% include 'parciais/_pagination.html' %}
+    </div>
+  </div>
+{% endblock %}
